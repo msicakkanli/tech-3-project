@@ -33,3 +33,73 @@ $('#design').on('click',function () {
         $("#color").val("default")
     }
 })
+
+//register conferance control
+const selectConferance = document.querySelector('.activities');
+const conferanceList = Array.from(selectConferance.getElementsByTagName("input"))
+
+selectConferance.addEventListener('change', (e) => {
+
+    selectHideConferance(e);
+    calulateTotal(e);
+    
+})
+
+
+
+function selectHideConferance(e) {
+    const checkbox = e.target;
+    const checked = checkbox.checked;
+    if (checkbox.name === "js-frameworks" && checked) {
+        conferanceList[3].disabled = true;
+    }
+    ;
+    if (checkbox.name === "js-libs" && checked) {
+        conferanceList[4].disabled = true;
+    }
+    ;
+    if (checkbox.name === "node" && checked) {
+        conferanceList[2].disabled = true;
+    }
+    if (checkbox.name === "express" && checked) {
+        conferanceList[1].disabled = true;
+    }
+    if (checkbox.name === "js-frameworks" && checked === false) {
+        conferanceList[3].disabled = false;
+    }
+    ;
+    if (checkbox.name === "js-libs" && checked === false) {
+        conferanceList[4].disabled = false;
+    }
+    ;
+    if (checkbox.name === "node" && checked === false) {
+        conferanceList[2].disabled = false;
+    }
+    if (checkbox.name === "express" && checked === false) {
+        conferanceList[1].disabled = false;
+    }
+}
+
+function calulateTotal(e) {
+    const checkbox = e.target;
+    const checked = checkbox.checked;
+    const total = document.createElement('p');
+        $('#total').remove();
+        selectConferance.appendChild(total);
+        total.innerHTML= "Total:";
+        total.setAttribute('id','total');
+    
+    let totalPrice = 0;
+    let count = 0;
+        if (conferanceList[0].name === "all" && conferanceList[0].checked === true) {
+            count = $("[type='checkbox']:checked").length;
+            count = count + 1
+        }      
+        else {
+            count = $("[type='checkbox']:checked").length;
+        }
+    totalPrice = 100 * count;
+    $('#total').append('<span>'+ '$'+ totalPrice + '</span>');
+    
+}
+
