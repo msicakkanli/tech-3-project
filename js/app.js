@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('#name').focus();
 })
 // add and remove job role when selected other option
-$('#title').on('click',function () {
+$('#title').on('change',function () {
     let jobTitle = $(this).val();
     if(jobTitle === "other") {
       let jobRole = '<input type="text" id="other-title" name="job_title" placeholder="Your Job Role">';
