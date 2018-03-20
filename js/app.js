@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('#name').focus();
 })
 // add and remove job role when selected other option
-$('#title').on('click',function () {
+$('#title').on('change',function () {
     let jobTitle = $(this).val();
     if(jobTitle === "other") {
       let jobRole = '<input type="text" id="other-title" name="job_title" placeholder="Your Job Role">';
@@ -14,7 +14,7 @@ $('#title').on('click',function () {
 })
 
 //select desing and change color select menu
-$('#design').on('click',function () {
+$('#design').on('change',function () {
     let selectedDesing = $('#design').val();
     if (selectedDesing === "js puns") {
         $("#color").children('option').hide();
@@ -133,6 +133,7 @@ paymentMethod.addEventListener('change',(e) =>{
 
 $(document).on('click', 'button', function (e) {
     //control name & emai label empty state 
+    let submitForm = true;
     let name = $('#name').val();
     let email = $('#mail').val();
     let testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
@@ -142,6 +143,7 @@ $(document).on('click', 'button', function (e) {
         $('#name').prev().css("color", "red");
         $('#name').prev().first().text('Name: (please provide your name)');
         $('#name').css("border-color", "red");
+        submitForm = false;
     }
     
     if (testEmail.test(email)) {
@@ -151,6 +153,7 @@ $(document).on('click', 'button', function (e) {
         $('#mail').prev().css("color", "red");
         $('#mail').prev().first().text('Email: (please provide a valid  e-mail address)');
         $('#mail').css("border-color", "red");
+        submitForm = false;
     }
     //control conferance section selected option
     let clickCount = 0; 
@@ -163,7 +166,8 @@ $(document).on('click', 'button', function (e) {
     if (clickCount === 0) {
         
         $('.activities').children().first().append('<p id="select"> Please select an Activity </p>');
-        $('#select').css("color","red")
+        $('#select').css("color","red");
+        submitForm = false;
     }    
     let design = $('#design').val();
     let colorName = $('#color').val();
@@ -171,16 +175,20 @@ $(document).on('click', 'button', function (e) {
    // control selected t-shirt option  
    if (design === "Select Theme" || colorName === "default") {
        $('.shirt').children().first().append("<p id='forget'>Don't forget to pick up a T-Shirt</p>");
-       $('#forget').css("color","red")
+       $('#forget').css("color","red");
+       submitForm = false;
    }
 
    //control credit card (card no, cvv, zip code) validation
+   let paymentType = $('#payment').val();
+   if (paymentType === "credit card") {
    let cvvNumber = $('#cvv').val();
    let numberOfDigitsCvv=cvvNumber.toString().length
    if ($.isNumeric(cvvNumber) &&  numberOfDigitsCvv === 3) {
     // everything is fine :)
    } else {
        $('#cvv').prev().css("color", "red");
+       submitForm = false;
    };
 
    let zipCode = $('#zip').val();
@@ -189,6 +197,7 @@ $(document).on('click', 'button', function (e) {
     // everything is fine :)
    } else {
        $('#zip').prev().css("color", "red");
+       submitForm = false;
    };
 
    let cardNumber = $('#cc-num').val();
@@ -197,8 +206,11 @@ $(document).on('click', 'button', function (e) {
    
    } else {
        $('#cc-num').prev().css("color", "red");
+       submitForm = false;
    };
+};
 
-    e.preventDefault();
-    
+if(submitForm === false) { 
+         e.preventDefault();
+        } 
 })
