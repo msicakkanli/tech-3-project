@@ -14,7 +14,7 @@ $('#title').on('change',function () {
 })
 
 //select desing and change color select menu
-$('#design').on('click',function () {
+$('#design').on('change',function () {
     let selectedDesing = $('#design').val();
     if (selectedDesing === "js puns") {
         $("#color").children('option').hide();
